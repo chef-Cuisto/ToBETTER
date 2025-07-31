@@ -7,6 +7,7 @@ Ce dépôt contient un squelette minimal avec:
 - **Backend FastAPI** (`backend/app`)
   - Authentification basique (inscription, connexion)
   - Gestion des matchs et des prédictions
+  - Ajout des favoris (matchs ou prédictions)
   - Script de génération de données de démonstration
   - Schéma de base de données PostgreSQL (`backend/schema.sql`)
 - **Frontend React** (`frontend`)

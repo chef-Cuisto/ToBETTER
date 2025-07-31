@@ -36,3 +36,15 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT UNIQUE NOT NULL,
     hashed_password TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS favorite_matches (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    match_id INTEGER REFERENCES matches(id)
+);
+
+CREATE TABLE IF NOT EXISTS favorite_predictions (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    prediction_id INTEGER REFERENCES predictions(id)
+);

@@ -44,3 +44,17 @@ class Prediction(BaseModel):
 
     class Config:
         orm_mode = True
+
+class FavoriteMatch(BaseModel):
+    id: int
+    match: Match
+
+    class Config:
+        orm_mode = True
+
+class FavoritePrediction(BaseModel):
+    id: int
+    prediction: Prediction
+
+    class Config:
+        orm_mode = True
