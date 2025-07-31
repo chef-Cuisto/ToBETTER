@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
+from datetime import datetime
 from sqlalchemy.orm import relationship
 from .database import Base
 
@@ -32,6 +33,7 @@ class Prediction(Base):
     match_id = Column(Integer, ForeignKey('matches.id'))
     outcome = Column(String)
     probability = Column(Float)
+    created_at = Column(DateTime, default=datetime.utcnow)
     match = relationship('Match')
 
 class PredictionHistory(Base):
@@ -40,6 +42,7 @@ class PredictionHistory(Base):
     prediction_id = Column(Integer, ForeignKey('predictions.id'))
     result = Column(String)  # 'win' or 'loss'
     value_bet = Column(Integer)  # 1 if value bet, 0 otherwise
+    evaluated_at = Column(DateTime, default=datetime.utcnow)
     prediction = relationship('Prediction')
 
 class User(Base):
@@ -47,3 +50,19 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
+
+class FavoriteMatch(Base):
+    __tablename__ = 'favorite_matches'
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    match_id = Column(Integer, ForeignKey('matches.id'))
+    user = relationship('User')
+    match = relationship('Match')
+
+class FavoritePrediction(Base):
+    __tablename__ = 'favorite_predictions'
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    prediction_id = Column(Integer, ForeignKey('predictions.id'))
+    user = relationship('User')
+    prediction = relationship('Prediction')

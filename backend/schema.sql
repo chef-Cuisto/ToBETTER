@@ -21,18 +21,32 @@ CREATE TABLE IF NOT EXISTS predictions (
     id SERIAL PRIMARY KEY,
     match_id INTEGER REFERENCES matches(id),
     outcome TEXT,
-    probability REAL
+    probability REAL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS prediction_history (
     id SERIAL PRIMARY KEY,
     prediction_id INTEGER REFERENCES predictions(id),
     result TEXT,
-    value_bet INTEGER
+    value_bet INTEGER,
+    evaluated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     email TEXT UNIQUE NOT NULL,
     hashed_password TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS favorite_matches (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    match_id INTEGER REFERENCES matches(id)
+);
+
+CREATE TABLE IF NOT EXISTS favorite_predictions (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    prediction_id INTEGER REFERENCES predictions(id)
 );

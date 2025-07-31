@@ -41,6 +41,39 @@ class Prediction(BaseModel):
     id: int
     outcome: str
     probability: float
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+class PredictionWithValue(Prediction):
+    is_value_bet: bool
+
+class PredictionHistory(BaseModel):
+    id: int
+    prediction_id: int
+    result: str
+    value_bet: int
+    evaluated_at: datetime
+
+    class Config:
+        orm_mode = True
+
+class LeaderboardEntry(BaseModel):
+    team: str
+    predictions: int
+    wins: int
+
+class FavoriteMatch(BaseModel):
+    id: int
+    match: Match
+
+    class Config:
+        orm_mode = True
+
+class FavoritePrediction(BaseModel):
+    id: int
+    prediction: Prediction
 
     class Config:
         orm_mode = True
