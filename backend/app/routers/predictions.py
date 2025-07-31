@@ -16,7 +16,6 @@ def get_db():
 def list_predictions(db: Session = Depends(get_db)):
     return db.query(models.Prediction).all()
 
-
 def _is_value_bet(pred: models.Prediction, db: Session) -> bool:
     odd = (
         db.query(models.BookmakerOdd)
@@ -29,7 +28,6 @@ def _is_value_bet(pred: models.Prediction, db: Session) -> bool:
     if not odd:
         return False
     return pred.probability * odd.odd > 1.1
-
 
 @router.get("/valuebets", response_model=list[schemas.PredictionWithValue])
 def list_value_bets(db: Session = Depends(get_db)):

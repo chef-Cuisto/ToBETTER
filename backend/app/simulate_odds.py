@@ -29,7 +29,7 @@ def create_sample_data(db: Session):
             db.add(models.BookmakerOdd(match_id=match.id, outcome=outcome, odd=odd_val))
         db.commit()
 
-        # create a simple prediction and result
+        # Créer une prédiction simple
         pred_outcome = random.choice(["A", "B"])
         probability = random.uniform(0.4, 0.6)
         pred = models.Prediction(match_id=match.id, outcome=pred_outcome, probability=probability)
@@ -37,7 +37,6 @@ def create_sample_data(db: Session):
         db.commit()
 
         is_value = 1 if probability * odds[pred_outcome] > 1.1 else 0
-
         result = random.choice(["win", "loss"])
         db.add(models.PredictionHistory(prediction_id=pred.id, result=result, value_bet=is_value))
         db.commit()
